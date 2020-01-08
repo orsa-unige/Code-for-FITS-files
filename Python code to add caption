@@ -1,0 +1,33 @@
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from astropy.io import fits
+
+cd/"filepath"
+
+file1 = "filename"
+
+#to add the caption "IMAGETYP"
+hdulist = fits.open(file1) 
+hdulist.info()
+
+Filename: file1
+
+hdu = hdulist[0]
+
+hdu.data.shape
+
+hdu.header
+
+fits.info(file1)
+fits.setval(file1, 'IMAGETYP', value='some value')
+
+with fits.open(file1, 'update') as f:
+    for hdu in f:
+        hdu.header['IMAGETYP'] = 'insert image type'
+print("After modifications:")
+print()
+print("Extension 0:")
+print(repr(fits.getheader(file1, 0)))
+print()
+
