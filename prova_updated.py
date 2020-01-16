@@ -35,12 +35,12 @@ path = os.chdir(cammino)
 
 
 x = glob.glob("*.fits")
-for files in x:
-    hdulist = fits.open(files) 
-    hdulist.info()
-    hdu = hdulist[0]
-    hdu.data.shape
-
+#for files in x:
+#    hdulist = fits.open(files[0])
+hdulist = fits.open(x[0]) 
+hdulist.info()
+hdu = hdulist[0]
+hdu.data.shape
 
 # In[13]:
 
