@@ -4,15 +4,10 @@
 import sys
 from astropy.io import fits
 
-def main():
-
-    if len(sys.argv) < 4 :    # C'è anche lo [0] che è il nome del file :)
-        print("Usage:  "+sys.argv[0]+" KEYWORD value <list of FITS files>")
-        sys.exit()
-        
-    key = sys.argv[1].upper() # Keyword in maiuscolo. Vedi (a).
-    valore = sys.argv[2]      # Valore
-    pattern = sys.argv[3:]    # File(s). "3:" significa "dal 3 in poi".
+def update_keyword(key, valore, pattern):
+    '''Creates or updates a keyword in a list of fits files.
+    Provide: KEYWORD value [list of FITS files]
+    '''
     
     for filename in pattern:  # Così non c'è bisogno di glob! Vedi (b).
         with fits.open(filename,'update') as hdulist:
@@ -24,7 +19,19 @@ def main():
             hdr[key] = valore
 
 
-if __name__ == "__main__":
+def main():        
+    key = sys.argv[1].upper() # Keyword in maiuscolo. Vedi (a).
+    valore = sys.argv[2]      # Valore
+    pattern = sys.argv[3:]    # File(s). "3:" significa "dal 3 in poi".
+
+    update_keyword(key, valore, pattern)
+
+if __name__ == '__main__':
+
+    if len(sys.argv) < 4 :    # C'è anche lo [0] che è il nome del file :)
+        print("Usage:  "+sys.argv[0]+" KEYWORD value <list of FITS files>")
+        sys.exit()
+
     main()
 
 # vedi:
