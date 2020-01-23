@@ -36,6 +36,7 @@ def main():
         key = sys.argv[1]
         valore = sys.argv[2]
         folder = glob.glob("./**/*.fits", recursive = True)
+
         for files in folder:
             print(files)
             hdu = fits.PrimaryHDU()
@@ -50,6 +51,7 @@ def main():
                     for hdu in f:
                         hdu.header[key] = valore
 
+
 if __name__ == "__main__":
     main()
 
@@ -61,7 +63,6 @@ if __name__ == "__main__":
 
 
 # In[ ]:
-
 
 
 
