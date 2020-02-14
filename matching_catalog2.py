@@ -58,7 +58,7 @@ def get_wcs(pattern):
         DEC = header['DEC']
         print(RA,DEC)
         u.def_unit('RA','DEC')
-        c = SkyCoord(RA=ra*u.degree, dec=DEC*u.degree)
+        c = SkyCoord(ra=RA*u.degree, dec=DEC*u.degree)
         catalog = SkyCoord(ra=ra*u.degree, dec=dec*u.degree)  #Come ottengo RA e DEC del catalogo?
         idx, d2d, d3d = c.match_to_catalog_sky(catalog)
         matches = catalog[idx]
