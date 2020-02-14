@@ -51,7 +51,6 @@ def get_wcs(pattern):
         ax2.imshow(segm, origin='lower', cmap=cmap)
         ax2.set_title('Segmentation Image')
         plt.show()
-        set_title.show()
                     
         from astropy.coordinates import SkyCoord
         from astropy import units as u
