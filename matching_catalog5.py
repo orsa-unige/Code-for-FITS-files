@@ -14,9 +14,7 @@ from astropy.stats import sigma_clipped_stats
 from photutils import DAOStarFinder
 import numpy as np
 from astropy.visualization import SqrtStretch
-from astropy.visualization.mpl_normalize import ImageNormalize
 from astroquery.vizier import Vizier
-import astropy.coordinates as coord
 from astropy.coordinates import match_coordinates_sky
 
 
@@ -58,10 +56,12 @@ def get_wcs(pattern):
         cobjy = cobj.dec.degree
         refx = x[1]
         refy = y[1]
+        
         Bin = float(header['CCDSUM'][0])
         Res = 0.25 #arcsec/px
         f_arcsec = Bin*Res #arcsec/px
         f = f_arcsec/3600
+        
         for n in x:
             dx = x - refx
             xscal = cobjx + (f*dx)
