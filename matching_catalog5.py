@@ -87,6 +87,8 @@ def get_wcs(pattern):
         ax.plot(xscal,yscal,'ok',ms=5)
         ax.plot(x1,y1,'or',mfc='none',ms=10)
         plt.show()
+        
+        dx, d2d, d3d = c1.match_to_catalog_sky(c2)
 
 def main():
     pattern = sys.argv[1:]
