@@ -129,11 +129,6 @@ def plot_imag_and_catalog(pattern):
 
 def main():
     pattern = sys.argv[1:]
-    rotate_img(pattern)
-    get_target_coord(pattern)
-    detect_sources(pattern)
-    pix_to_deg(pattern)
-    get_catalog()
     plot_imag_and_catalog(pattern)
 
 
