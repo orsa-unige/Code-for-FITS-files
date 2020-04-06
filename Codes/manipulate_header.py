@@ -85,7 +85,8 @@ def which_instrument(pattern):
         instruments used for the observations
 
         Parameters: an angle (rad) is required to build the matrix. Default
-        is pi/2'''
+        is pi/2. 
+        Binning factor depends on the instrument'''
     import numpy as np
     header = get_header(pattern)
     if 'CCDXBIN' in header:
