@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# System modules
+from astropy import units as u
+from astropy.coordinates import SkyCoord, FK5
+from astroquery.vizier import Vizier
+
+# Our modules
+from manipulate_header import get_obj, get_header, EQUINOX
+
+
 def get_target_coords(target,pattern):
     ''' Get target coords by header 'OBJECT' or by input and gives his RA
         and DEC'''
-    from astropy.coordinates import SkyCoord
-    from manipulate_header import get_obj, get_header, EQUINOX
-    from astropy import units as u
-    from astropy.coordinates import FK5
     o = get_obj(target, pattern)
     header = get_header(pattern)
     eq = EQUINOX(pattern)
@@ -17,12 +22,10 @@ def get_target_coords(target,pattern):
     d['DEC_target'] = d['target_coords'].dec.degree
     return(d)
 
+
 def get_catalog(target, pattern):
     '''Gets a catalog from target's name and gives his objects coordinates
         in RA and DEC'''
-    from astropy.coordinates import SkyCoord
-    from astropy import units as u
-    from astroquery.vizier import Vizier
     d = get_target_coords(target, pattern)
     cooEQ = d['target_coords']
     rad = 40*u.arcmin
@@ -40,6 +43,7 @@ def main():
     target = sys.argv[1]
     pattern = sys.argv[2:]
     get_catalog(target, pattern)
+
     
 if __name__ == '__main__':
     import sys

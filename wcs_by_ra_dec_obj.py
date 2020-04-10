@@ -28,21 +28,19 @@ def choose_hdu(filename):
     else:
         return finfo_list[0][0]
 
-def get_header(pattern):
-    for filename in pattern:
-        which_hdu = choose_hdu(filename)
-        header = fits.getheader(filename, which_hdu)
-        return(header)
+def get_header(filename):
+    which_hdu = choose_hdu(filename)
+    header = fits.getheader(filename, which_hdu)
+    return(header)
 
-def get_obj(target, xobj, yobj, pattern):
-    header = get_header(pattern)   
+def get_obj(target, xobj, yobj, filename):
+    header = get_header(filename)   
+    o = dict();
     if 'OBJECT' in header:
-        o = dict();
         o['obj'] = header['OBJECT']
         o['xobj'] = xobj
         o['yobj'] = yobj
     else:
-        o = dict();
         o['obj'] = target
         o['xobj'] = xobj
         o['yobj'] = yobj

@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# System modules
+import matplotlib.pyplot as plt
+from astropy.coordinates import FK5
+
+# Our modules
+from cat_and_target_coords import get_target_coords, get_catalog
+from image_sources_coords import get_sources_coords
+
+
 def plot_img(target,pattern):
     ''' Plots RA and DEC of the files.
         In the second plot, the catalog will be plotted with red circles,
         the image objects with blu spheres, and the target coords with
         the yellow dot'''
-    import matplotlib.pyplot as plt
-    from astropy.coordinates import FK5
-    from cat_and_target_coords import get_target_coords, get_catalog
-    from image_sources_coords import get_sources_coords
     fig1, ax = plt.subplots()
     c = get_sources_coords(target, pattern)
     ax.plot(c['RA_img'],c['DEC_img'], 'ok', ms=5)
@@ -24,10 +29,12 @@ def plot_img(target,pattern):
     plt.show()
     return plt.show()
 
+
 def main():
     target = sys.argv[1]
     pattern = sys.argv[2:]
     plot_img(target, pattern)
+
     
 if __name__ == '__main__':
     import sys

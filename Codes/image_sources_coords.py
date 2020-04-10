@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# System modules
+import numpy as np
+from astropy.io import fits
+from astropy.stats import sigma_clipped_stats
+from photutils import DAOStarFinder
+
+# Our modules 
+from manipulate_header import wcs, get_header
+
+
 def get_sources_coords(target, pattern):
     ''' Takes objects coords from .fits files and transform them to RA and DEC
         using the WCS keywords'''
-    from astropy.io import fits
-    from astropy.stats import sigma_clipped_stats
-    from photutils import DAOStarFinder
-    import numpy as np
-    from manipulate_header import wcs, get_header
     w = wcs(target, pattern)
     header = get_header(pattern)
     
@@ -30,10 +35,12 @@ def get_sources_coords(target, pattern):
         c['DEC_img'] = world_y
         return(c)
 
+    
 def main():
     target = sys.argv[1]
     pattern = sys.argv[2:]
     get_sources_coords(target, pattern)
+
     
 if __name__ == '__main__':
     import sys

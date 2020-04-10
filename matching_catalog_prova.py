@@ -59,13 +59,16 @@ def get_target_coord(pattern):
         catalog_object_coord = SkyCoord.from_name(header['OBJECT'], parse=True)
         xobj = catalog_object_coord.ra.degree
         yobj = catalog_object_coord.dec.degree
-        print(xobj,yobj)        
+        return (xobj,yobj)        
     
-        
 def main():
     pattern = sys.argv[1:]
     get_data(pattern)
+    
+    x=get_target_coord(pattern)
+    print(x)
 
+    
 if __name__ == '__main__':
     import sys
     if len(sys.argv) < 2 :

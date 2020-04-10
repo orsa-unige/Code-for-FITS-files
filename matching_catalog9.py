@@ -1,24 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from astropy.io import fits
-from astropy import units as u
-from astropy.coordinates import SkyCoord
-import astropy.coordinates as coord
-import matplotlib.pyplot as plt
-from photutils import detect_threshold
-from astropy.convolution import Gaussian2DKernel
-from astropy.stats import gaussian_fwhm_to_sigma
-from photutils import detect_sources
-from photutils import deblend_sources
-from astropy.stats import sigma_clipped_stats
-from photutils import DAOStarFinder
 import numpy as np
+import matplotlib.pyplot as plt
+import astropy.coordinates as coord
+from astropy import units as u
+from astropy.coordinates import SkyCoord, match_coordinates_sky
+from astropy.convolution import Gaussian2DKernel
+from astropy.io import fits
 from astropy.visualization import SqrtStretch
+from astropy.stats import gaussian_fwhm_to_sigma, sigma_clipped_stats
 from astroquery.vizier import Vizier
-from astropy.coordinates import match_coordinates_sky
+from photutils import detect_threshold, detect_sources, deblend_sources, DAOStarFinder
 from scipy.ndimage import rotate
-import math
 
 def choose_hdu(filename):
     finfo = fits.info(filename, output=False) # Returns a list of tuples.
@@ -37,6 +31,7 @@ def rotate_img(pattern): # Gets file data, rotates the image and extracts source
         rot = rotate(data,-90,reshape=False)
         return(rot)
 
+
 def get_target_coord(pattern):
     for filename in pattern:
         which_hdu = choose_hdu(filename)
@@ -48,7 +43,7 @@ def get_target_coord(pattern):
         return(c)
 
 
-def detect_sources(pattern):# extracts the light sources from the image (basing on sigma, FWHM, thrsholds...) 
+def detect_sources(pattern):# extracts the light sources from the image (basing on sigma, FWHM, thrsholds...)
     rot = rotate_img(pattern)
     threshold = detect_threshold(rot, nsigma=2.)
     sigma = 3.0 * gaussian_fwhm_to_sigma  # FWHM = 3.
@@ -65,13 +60,14 @@ def detect_sources(pattern):# extracts the light sources from the image (basing 
     d['y1'] = np.array(sources['ycentroid'])
     return(d)
 
+
 def pix_to_deg(pattern):
     c = get_target_coord(pattern)
     d = detect_sources(pattern)
     for filename in pattern:
         which_hdu = choose_hdu(filename)
         header = fits.getheader(filename, which_hdu)
-    
+
     Bin = float(header['CCDSUM'][0])
     Res = 0.25 #arcsec/px
     f_arcsec = Bin*Res #arcsec/px
@@ -87,6 +83,7 @@ def pix_to_deg(pattern):
         p['dec_img_deg'] = c['dec_obj'] + (f*dy)
     return(p)
 
+
 def get_catalog():
     coo = SkyCoord.from_name('GJ3470')
     rad = 40*u.arcmin
@@ -100,15 +97,17 @@ def get_catalog():
     print(coo.galactic)
     return(g)
 
+
 def plot_imag_and_catalog(pattern):
     c = get_target_coord(pattern)
     d = detect_sources(pattern)
     p = pix_to_deg(pattern)
     g = get_catalog()
+    
     fig1,ax = plt.subplots()
     ax.plot(p['ra_img_deg'],p['dec_img_deg'], 'ok', ms=5)
     ax.plot(c['ra_obj'], c['dec_obj'], 'oy', mfc='none',ms=10)
-    
+
     fig2, ax = plt.subplots()
     ax.set_aspect('equal')
     ax.set_xlim(119.65,119.85)
@@ -118,6 +117,7 @@ def plot_imag_and_catalog(pattern):
     ax.plot(c['ra_obj'], c['dec_obj'],'oy',ms=4)
     plt.show()
     return plt.show()
+
 
 def main():
     pattern = sys.argv[1:]
