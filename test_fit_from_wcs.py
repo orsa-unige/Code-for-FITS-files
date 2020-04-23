@@ -27,11 +27,10 @@ y1 = xy1[1]
     
 def rotate():
     d = dict();
-    angle = (0)
+    angle = (225)
     angle_rad = np.deg2rad(angle)
     d['x2'] = a + np.cos(angle_rad) * (x1 - a) - np.sin(angle_rad) * (y1 - b)
     d['y2'] = b + np.sin(angle_rad) * (x1 - a) + np.cos(angle_rad) * (y1 - b)
-    print(np.cos(angle_rad),np.sin(angle_rad))
     return d
 
 def wcs():
@@ -41,6 +40,11 @@ def wcs():
     print(wcs)
     header = fits.Header()
     header.extend(wcs.to_header(), update=True)
+    pc1_1 = header['PC1_1']
+    scale = -pc1_1*2/(np.sqrt(2))
+    sin_a = pc1_1/scale
+    alpha = np.rad2deg(np.arcsin(sin_a))
+    print(alpha)
     w = WCS(header)
     e = dict();
     world = w.wcs_pix2world(d['x2'],d['y2'],0)
@@ -71,7 +75,7 @@ def plot():
 
 
 def main():
-    plot()
+    wcs()
     
 if __name__ == '__main__':
 
