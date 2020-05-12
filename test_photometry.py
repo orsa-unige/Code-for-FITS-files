@@ -82,13 +82,32 @@ def circular_aperture(pattern):
         apertures = CircularAperture(e['positions'], r=6.8)
         header = get_header(pattern)
         wcs = WCS(header)
-##        plt.figure()
-##        plt.imshow(data, origin='lower',vmin=700,vmax=10000)
-##        apertures.plot(color='blue', lw=1.5, alpha=0.5)
-##        phot_table = aperture_photometry(data, apertures)
-##        annulus_aperture = CircularAnnulus(e['positions'], r_in=10, r_out=15)
-##        annulus_aperture.plot(color='white',lw=2)
-##        plt.colorbar()
+        plt.figure()
+        plt.imshow(data, origin='lower',vmin=700,vmax=10000)
+        apertures.plot(color='blue', lw=1.5, alpha=0.5)
+        phot_table = aperture_photometry(data, apertures)
+        annulus_aperture = CircularAnnulus(e['positions'], r_in=10, r_out=15)
+        annulus_aperture.plot(color='white',lw=2)
+        plt.colorbar()
+
+        annulus_masks = annulus_aperture.to_mask(method='center')
+        bkg_median = []
+        for mask in annulus_masks:
+            annulus_data = mask.multiply(data)
+            annulus_data_1d = annulus_data[mask.data > 0]
+            _, median_sigclip, _ = sigma_clipped_stats(annulus_data_1d)
+            bkg_median.append(median_sigclip)
+        bkg_median = np.array(bkg_median)
+        phot = aperture_photometry(data, apertures)
+        phot['annulus_median'] = bkg_median
+        phot['aper_bkg'] = bkg_median * apertures.area
+        phot['aper_sum_bkgsub'] = phot['aperture_sum'] - phot['aper_bkg']
+        for col in phot.colnames:
+            phot[col].info.format = '%.8g'
+        print(phot)
+        print(phot[29])
+
+        plt.show()
         return(e)
 
 def plot(pattern):
