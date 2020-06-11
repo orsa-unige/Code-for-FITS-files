@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from astropy.io import fits
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
@@ -11,7 +10,6 @@ from fits import get_fits_header, get_fits_data
 
 def detect_flats(pattern):
     for filename in pattern:
-        header = get_fits_header(filename)
         data = get_fits_data(filename)
         NBINS = 1000
         histogram = plt.hist(data.flatten(), NBINS)
