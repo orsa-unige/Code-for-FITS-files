@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 
-from fits import get_fits_header, get_fits_data
+from fits import get_fits_data
 
 
 def detect_flats(pattern):
