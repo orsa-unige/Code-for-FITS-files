@@ -16,7 +16,8 @@ def detect_flats(filenames):
         data_split = np.array_split(data, 100)
         data_split_avg = [np.mean(arr) for arr in data_split]
         for n in data_split_avg: 
-           if goodflat_condition == True:
+            goodflat_condition = 10000<n<55000
+            if goodflat_condition == True:
                 is_it_a_good_flat = True
             elif n >= 65536:
                 is_it_a_good_flat = False
