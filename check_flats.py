@@ -17,14 +17,14 @@ def detect_flats(pattern):
         data_split_avg = [np.mean(arr) for arr in data_split]
         for n in data_split_avg: 
            if goodflat_condition == True:
-                answer = True
+                is_it_a_good_flat = True
             elif n >= 65536:
-                answer = False
+                is_it_a_good_flat = False
                 warnings.warn('SATURATED FLAT ' + filename)
             else:
-                 answer = False
+                 is_it_a_good_flat = False
                  warnings.warn('NONLINEAR FLAT REGIME ' + filename)
-        print(answer, filename)
+        print(is_it_a_good_flat, filename)
 
 ##        plt.show()
                    
