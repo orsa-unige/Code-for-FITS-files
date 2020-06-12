@@ -8,8 +8,8 @@ import warnings
 from fits import get_fits_data
 
 
-def detect_flats(pattern):
-    for filename in pattern:
+def detect_flats(filenames):
+    for filename in filenames:
         data = get_fits_data(filename)
         NBINS = 1000
         histogram = plt.hist(data.flatten(), NBINS)
