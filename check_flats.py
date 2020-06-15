@@ -22,41 +22,12 @@ def detect_flats(data, size, min_val=10000, max_val=55000, saturated=65536):
             continue # Brava!!!
         else: # Va bene come l'hai fatto tu. Questa è un'alternativa:
             is_it_a_good_flat = False
-            if avg >= saturated:
-                log.warning('SATURATED FLAT ')
-            else:
-                log.warning('NONLINEAR FLAT REGIME ')
+            if avg >= saturated: log.warning('SATURATED FLAT ')
+            else: log.warning('NONLINEAR FLAT REGIME ')
             break
 ##    plt.show()
     return(is_it_a_good_flat)
 
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-import numpy as np
-#import matplotlib.pyplot as plt
-from astropy import log # questo è uguale a warnings però lo uso già dappertutto
-def detect_flats(data, size, min_val=10000, max_val=55000, saturated=65536):
-    data_split = np.array_split(data, size) # questo evita lenr lenc, gestisce lui la divisione.
-    data_split_avg = [ np.mean(arr) for arr in data_split ]
-    for avg in data_split_avg:
-        if min_val < avg < max_val :
-            is_it_a_good_flat = True
-            log.info(is_it_a_good_flat)
-            continue
-        elif avg >= saturated:
-            is_it_a_good_flat = False
-            #print(is_it_a_good_flat)
-            log.warning('SATURATED FLAT ')
-            break
-        else:
-            is_it_a_good_flat = False
-            #print(is_it_a_good_flat)
-            log.warning('NONLINEAR FLAT REGIME ')
-            break
-##    plt.show()
-    return(is_it_a_good_flat)
 
 # Se vogliamo scorrere la lista una sola volta senza stare a cercare
 # in particolare se è saturato o non lineare, allora conviene solo
