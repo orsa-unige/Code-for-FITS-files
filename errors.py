@@ -28,14 +28,12 @@ def signal_noise(filenames):
         with open('instruments.json') as jfile:
             instrument_dict = json.load(jfile)
 
-        instrument_id = header['INSTRUME']
-        
-        if instrument_id == 'Mexman':
+        if header['INSTRUME'] == 'Mexman':
             key = instrument_dict['Mexman']
             gain = key['gain']
-        elif instrument_id == 'DFOSC_FASU':
+        elif header['INSTRUME'] == 'DFOSC_FASU':
             log.warning('gain == null ')
-        elif instrument_id == 'STL-11000 3 CCD Camera':
+        elif header['INSTRUME'] == 'STL-11000 3 CCD Camera':
             key = instrument_dict['STL-11000 3 CCD Camera']
             gain = key['gain']
         else:
