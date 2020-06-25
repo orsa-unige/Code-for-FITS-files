@@ -32,7 +32,7 @@ def signal_noise(filenames):
             key = instrument_dict['Mexman']
             gain = key['gain']
         elif header['INSTRUME'] == 'DFOSC_FASU':
-            log.warning('gain == null ')
+            gain = 1.413
         elif header['INSTRUME'] == 'STL-11000 3 CCD Camera':
             key = instrument_dict['STL-11000 3 CCD Camera']
             gain = key['gain']
