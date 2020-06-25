@@ -4,7 +4,6 @@
 import json
 from astropy import log
 from astropy.wcs import WCS
-from astropy.io import fits
 
 # our functions
 from fits import get_fits_data, get_fits_header
