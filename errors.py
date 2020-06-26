@@ -31,15 +31,20 @@ def signal_noise(filenames):
         if header['INSTRUME'] == 'Mexman':
             key = instrument_dict['Mexman']
             gain = key['gain']
+            RON = key['ron']
         elif header['INSTRUME'] == 'DFOSC_FASU':
             key = instrument_dict['DFOSC_FASU']
             gain = key['gain']
+            RON = key['ron']
         elif header['INSTRUME'] == 'STL-11000 3 CCD Camera':
             key = instrument_dict['STL-11000 3 CCD Camera']
             gain = key['gain']
+            RON = key['ron']
         else:
             log.warning('INSTRUMENT NOT FOUND ')
             
+        signal_noise = (R_star)/[(R_star + R_sky + RON + (gain/2)**2)**1/2]
+        # for now I'm neglecting Dark Current effects 
         
-    return(R_star, R_sky, n_pix_aperture, gain)
+    return(signal_noise)
          
