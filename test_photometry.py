@@ -33,7 +33,7 @@ def img_coords(pattern):
         c['x1'] = np.array(sources['xcentroid'])
         c['y1'] = np.array(sources['ycentroid'])
         c['loc'] = (c['x1'],c['y1'])
-        return(c)
+         return(c)
 
 
 def circular_aperture_img(pattern):
