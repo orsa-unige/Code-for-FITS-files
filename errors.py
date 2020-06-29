@@ -36,6 +36,7 @@ def signal_noise(filenames):
             key = instrument_dict['DFOSC_FASU']
             gain = key['gain']
             RON = key['ron']
+            log.warning('MISSING DATA ')
         elif header['INSTRUME'] == 'STL-11000 3 CCD Camera':
             key = instrument_dict['STL-11000 3 CCD Camera']
             gain = key['gain']
