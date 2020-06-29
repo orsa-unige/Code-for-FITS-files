@@ -40,8 +40,8 @@ def signal_noise(filenames, my_instr="Mexman"):
         # else:
         #     log.warning('INSTRUMENT NOT FOUND ')
             
-        gain = instument['gain']
-        RON = instument['ron']
+        gain = instrument['gain']
+        RON = instrument['ron']
         if gain is None:
             log.warning(f'Gain not found for {instrument}')
         if ron is None:
