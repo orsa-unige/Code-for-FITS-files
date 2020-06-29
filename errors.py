@@ -29,7 +29,7 @@ def signal_noise(filenames, my_instr="Mexman"):
         with open('instruments.json') as jfile:
             instrument_dict = json.load(jfile)
 
-        instument = instrument_dict[my_instr]
+        instrument = instrument_dict[my_instr]
 
         # if header['INSTRUME'] == 'Mexman':
         #     key = instrument_dict['Mexman']
